@@ -16,8 +16,8 @@ public class VacancyDAO {
 
 		session.getTransaction().begin();
 
-		session.save(vacancy);
-
+		session.saveOrUpdate(vacancy);
+		
 		session.getTransaction().commit();
 
 		session.close();

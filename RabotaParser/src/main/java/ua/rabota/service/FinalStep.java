@@ -2,6 +2,8 @@ package ua.rabota.service;
 
 import java.io.IOException;
 
+
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,6 +16,8 @@ public class FinalStep {
 
 	public void vacancyParse(String vacancyUrl, Vacancy vacancy) {
 
+		vacancy.setUrl(vacancyUrl);
+		
 		String[] findId = vacancyUrl.split("/");
 		String id = findId[findId.length - 1].replaceAll("[^0-9]", "");
 		vacancy.setId(id);
@@ -28,9 +32,7 @@ public class FinalStep {
 		}
 		if (vacancyPage.toString().contains("d_content") && vacancyPage.toString().contains("d-ph-0")) {
 			
-//			if(vacancyUrl.equals("https://rabota.ua/company794/vacancy7208034")) {
-//				System.out.println("now");
-//			}
+
 			Element content = vacancyPage.getElementsByAttributeValueMatching("class", "d_content").first();
 
 			String name = content.getElementsByTag("h1").first().text();
@@ -44,16 +46,19 @@ public class FinalStep {
 
 			vacancy.setCompany(company);
 
-			String info = description.getElementById("d-ph-1").text() + " "
-					+ description.getElementById("d-ph-2").text() + " " + description.getElementById("d-ph-3").text();
-
+			String info = description.getElementById("d-ph-1").text() + "\n"
+					+ description.getElementById("d-ph-2").text() + "\n" + description.getElementById("d-ph-3").text();
+			
 			vacancy.setInfo(info);
 
-			Elements requirments = description.getElementsByTag("p");
-			String text = "";
-			for (Element infoElement : requirments) {
-				text += infoElement.text() + "\n";
-			}
+//			Elements requirments = description.getElementsByTag("p");
+			Element requirments = content.getElementsByClass("d_des").last()/*getElementsByAttributeValueMatching("class", "d_des").last()*/;
+			String requirmentsText = requirments.text();
+			String text = StringUtils.substringAfter(requirmentsText, description.getElementById("d-ph-3").text());
+//			String text = StringUtils.substringAfter(requirments.text(), info);
+//			for (Element infoElement : requirments) {
+//				text += infoElement.text() + "\n";
+//			}
 
 			vacancy.setDescription(text);
 

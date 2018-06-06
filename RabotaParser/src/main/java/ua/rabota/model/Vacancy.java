@@ -30,4 +30,7 @@ public class Vacancy {
 	
 	@Column(name = "language")
 	private String language;
+	
+	@Column(name = "url")
+	private String url;
 }

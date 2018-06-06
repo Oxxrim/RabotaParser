@@ -36,7 +36,7 @@ public class VacancyParser {
 		}
 		
 		for (String vacancyUrl : vacancyUrls) {
-			System.out.println(vacancyUrl);
+			
 			FinalStep finalStep = new FinalStep();
 			finalStep.vacancyParse(vacancyUrl, vacancy);
 			
