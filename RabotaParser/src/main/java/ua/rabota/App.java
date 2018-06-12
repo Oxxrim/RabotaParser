@@ -25,5 +25,7 @@ public class App {
 			nav.runParser(vacancys[i], vacancy);
 		}
 		
+		System.out.println("THE END");
+		
 	}
 }

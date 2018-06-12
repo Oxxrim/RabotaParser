@@ -33,4 +33,6 @@ public class Vacancy {
 	
 	@Column(name = "url")
 	private String url;
+	
+	
 }
